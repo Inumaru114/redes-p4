@@ -55,11 +55,14 @@ class Enlace:
         pass
 
     def __raw_recv(self, dados):
-        # TODO: Preencha aqui com o código para receber dados da linha serial.
-        # Trate corretamente as sequências de escape. Quando ler um quadro
-        # completo, repasse o datagrama contido nesse quadro para a camada
-        # superior chamando self.callback. Cuidado pois o argumento dados pode
-        # vir quebrado de várias formas diferentes - por exemplo, podem vir
-        # apenas pedaços de um quadro, ou um pedaço de quadro seguido de um
-        # pedaço de outro, ou vários quadros de uma vez só.
+        self.buffer += dados
+
+        while b'\xC0' in self.buffer:
+            data, _, self.buffer = self.buffer.partition(b'\xC0')
+
+            if (len(data) ==0):
+                continue
+            
+        if (self.callback):
+            self.callback(data)
         pass
