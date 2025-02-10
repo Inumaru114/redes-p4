@@ -62,7 +62,9 @@ class Enlace:
 
             if (len(data) ==0):
                 continue
-            
+
+        data = data.replace(b'\xDB\xDC', b'\xC0').replace(b'\xDB\xDD', b'\xDB')    
+        
         if (self.callback):
             self.callback(data)
         pass
